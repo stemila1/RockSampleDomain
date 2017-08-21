@@ -11,7 +11,7 @@ import static rocksample.RockSample.*;
 
 public class RockSampleObserv implements MutableState{
 
-	List<String> rockFeedback =  new ArrayList<String>();
+	private List<String> rockFeedback =  new ArrayList<String>();
 	
 	//list to store the returned feedback
 	public RockSampleObserv(List<String> rockFeedback){

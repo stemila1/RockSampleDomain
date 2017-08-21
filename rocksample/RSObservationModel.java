@@ -18,9 +18,13 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	protected double scanAccuracy;
 	//protected boolean includeDoNothing;
 	
+	public RSObservationModel(double scanAccuracy){
+		this.scanAccuracy = scanAccuracy;
+	}
+	
 	@Override
 	public List<State> allObservations() {
-		
+		//TODO
 		List<State> result = new ArrayList<State>(3);
 		
 		//result.add(State e);
@@ -54,11 +58,11 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		RockSampleState s = (RockSampleState) state;
 		
 		List<String> feedback = new ArrayList<String>();
-		feedback.add(RockSample.QUALITY_UNKNOWN);
-		//feedback.add(RockSample.QUALITY_UNKNOWN);
-		//feedback.add(RockSample.QUALITY_UNKNOWN);
-		
-		return new RockSampleObserv();
+		int numRocks = s.objectsOfClass(RockSample.CLASS_ROCK).size();
+		for(int i = 1; i < numRocks; i++){
+			feedback.add(RockSample.QUALITY_UNKNOWN);
+		}
+		return new RockSampleObserv(feedback);
 	}
 
 	@Override

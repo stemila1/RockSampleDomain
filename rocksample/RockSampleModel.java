@@ -192,7 +192,6 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 	//temporary scan function to use for do nothing action
 	public State tempScan(State s){
 		
-		
 		return s;
 		
 	}

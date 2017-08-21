@@ -69,6 +69,7 @@ import burlap.visualizer.Visualizer;
 import burlap.mdp.singleagent.SADomain;
 */
 import burlap.mdp.singleagent.pomdp.PODomain;
+import burlap.mdp.singleagent.pomdp.observations.ObservationFunction;
 import burlap.statehashing.HashableStateFactory;
 import burlap.statehashing.simple.SimpleHashableStateFactory;
 //import ksgridworld.KSGoalConditionTest;
@@ -119,6 +120,7 @@ public class RockSample implements DomainGenerator {
 	//public static final String QUALITY_TOXIC =  "toxic";
 	//public static final String QUALITY_NONTOXIC =  "non-toxic";
 	
+	public int numRocks = 0;
 	public int numGoodRocksVisited = 0;
 	public int numBadRocksVisited = 0;
 	public int numGoodRocksScanned = 0;
@@ -193,6 +195,8 @@ public class RockSample implements DomainGenerator {
 			//.addActionType(new UniversalActionType(ACTION_PICKUP))
 			;
 		
+		ObservationFunction of = new RSObservationModel(this.scanAccuracy);
+		rsdomain.setObservationFunction(of);
 		
 		if (rf == null){
 			
@@ -202,8 +206,7 @@ public class RockSample implements DomainGenerator {
 		if (tf == null){
 			
 			tf = new NullTermination();
-		}
-		
+		} 
 		
 		/*create a model = new MYmodel()
 		 * 

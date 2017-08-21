@@ -24,6 +24,8 @@ public class RockSampleGoalTest implements StateConditionTest{
 		if(x == 2 && y == 0){
 			return true;
 		}
+		
+		else if()
 		return false;
 		//need to check if the agent has collected at least one bad rock -- fail
 		
