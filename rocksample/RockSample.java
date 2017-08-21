@@ -115,6 +115,7 @@ public class RockSample implements DomainGenerator {
 	
 	public static final String QUALITY_GOOD = "good";
 	public static final String QUALITY_BAD =  "bad";
+	public static final String QUALITY_UNKNOWN = "unknown";
 	//public static final String QUALITY_TOXIC =  "toxic";
 	//public static final String QUALITY_NONTOXIC =  "non-toxic";
 	
@@ -188,7 +189,7 @@ public class RockSample implements DomainGenerator {
 			.addActionType(new UniversalActionType(ACTION_EAST))
 			.addActionType(new UniversalActionType(ACTION_WEST))
 			.addActionType(new UniversalActionType(ACTION_SCAN))
-			//.addActionType(new UniversalActionType(ACTION_CLEAR))
+			.addActionType(new UniversalActionType(ACTION_CLEAR))
 			//.addActionType(new UniversalActionType(ACTION_PICKUP))
 			;
 		
