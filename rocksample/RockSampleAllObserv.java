@@ -18,6 +18,18 @@ public class RockSampleAllObserv implements DiscreteObservationFunction{
 	protected boolean includeDoNothing;
 	
 	@Override
+	public List<State> allObservations() {
+		
+		List<State> result = new ArrayList<State>(3);
+		
+		result.add(State e);
+		
+		if(includeDoNothing){
+			result.add(this.observationNothing());
+		}
+	}
+	
+	@Override
 	public double probability(State s, State s_prime, Action action) {
 		throw new RuntimeException("probability(State, State, Action) not implemented");
 	}

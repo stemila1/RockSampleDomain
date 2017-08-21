@@ -106,6 +106,7 @@ public class RockSample implements DomainGenerator {
 	//public static final String ACTION_NORTHWEST = "northwest";
 	//public static final String ACTION_SOUTHEAST = "southeast";
 	//public static final String ACTION_SOUTHWEST = "southwest";
+	
 	public static final String ACTION_SCAN = "scan";
 	public static final String ACTION_CLEAR = "clear";
 	//public static final String ACTION_PICKUP = "pickup";

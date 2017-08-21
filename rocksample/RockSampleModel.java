@@ -69,16 +69,18 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 		}*/
 		
 		else if (actionName.equals(RockSample.ACTION_CLEAR)){
-			return clearDebris(State s, Action a, String soe);
+			//TODO
+			throw new RuntimeException("Clear not implemented yet");
 		}
 		
 		else if(actionName.equals(RockSample.ACTION_DO_NOTHING)){
-			return 
+			//TODO
+			throw new RuntimeException("Do nothing not implemented yet");
 		}
 		
 		else {
-			throw new RuntimeException("Unknown action" + actionName);
-			
+			throw new RuntimeException("Unknown action" + actionName);	
+	
 		}
 		
 	}
