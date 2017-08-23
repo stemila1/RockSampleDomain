@@ -25,7 +25,7 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	@Override
 	public List<State> allObservations() {
 		//TODO
-		List<State> result = new ArrayList<State>(3);
+		List<State> result = new ArrayList<State>();
 		
 		//result.add(State e);
 		
@@ -63,11 +63,6 @@ public class RSObservationModel implements DiscreteObservationFunction{
 			feedback.add(RockSample.QUALITY_UNKNOWN);
 		}
 		return new RockSampleObserv(feedback);
-	}
-
-	@Override
-	public List<State> allObservations() {
-		throw new RuntimeException("allObservations() not implemented");
 	}
 
 	@Override
