@@ -70,7 +70,8 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 		
 		else if (actionName.equals(RockSample.ACTION_CLEAR)){
 			//TODO
-			throw new RuntimeException("Clear not implemented yet");
+			//throw new RuntimeException("Clear not implemented yet");
+			return clearDebris(s, RockSample.CLASS_DEBRIS);
 		}
 		
 		else if(actionName.equals(RockSample.ACTION_DO_NOTHING)){
@@ -252,7 +253,7 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 		
 	}
 
-	public void clearDebris(State s, String whatIsThis){
+	public State clearDebris(State s, String whatIsThis){
 		
 		RockSampleState rs = (RockSampleState)s;
 		RockSampleAgent agent = rs.getAgent();
@@ -262,6 +263,7 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 			rs.removeObject(whatIsThis);
 		}
 		
+		return rs;
 	}
 	
 	/*
