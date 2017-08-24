@@ -25,7 +25,7 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	@Override
 	public List<State> allObservations() {
 		//TODO
-		List<State> result = new ArrayList<State>();
+		List<State/*RockSampleObserv*/> result = new ArrayList<State/*RockSampleObserv*/>();
 		
 		//result.add(State e);
 		
@@ -36,9 +36,15 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	}
 	
 	@Override
-	public double probability(State s, State s_prime, Action action) {
+	public double probability(State observation, State s_prime, Action action) {
 		
-		throw new RuntimeException("probability(State, State, Action) not implemented");
+		//throw new RuntimeException("probability(State, State, Action) not implemented");
+		String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
+		
+		if(action.actionName()action.equals(RockSample.ACTION_SCAN)){
+		
+		}
+		
 		
 		
 	}
@@ -69,5 +75,13 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	public List<ObservationProbability> probabilities(State arg0, Action arg1) {
 		throw new RuntimeException("probabilities(State, Ation) not implemented");
 	}
+	
+	protected State observationRockQuality(){
+		throw new RuntimeException("observation for rock's quality not implemented");
+		//return new RockSampleObserv(null));
+	}
 
+	
+	
+	
 }

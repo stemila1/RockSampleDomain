@@ -248,9 +248,9 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 			
 	}
 	
-	public void collectRocks(){
+	public void collectRocks(State s){
 		//TODO
-		
+		RockSampleState rs = (RockSampleState)s;
 	}
 
 	public State clearDebris(State s, String whatIsThis){

@@ -11,24 +11,27 @@ import static rocksample.RockSample.*;
 
 public class RockSampleObserv implements MutableState{
 
+	public String scan;
 	private List<String> rockFeedback =  new ArrayList<String>();
 	
 	//list to store the returned feedback
 	public RockSampleObserv(List<String> rockFeedback){
 		
+		scan = ACTION_SCAN_NOTHING;
 		this.rockFeedback = rockFeedback;
 	}
 
 	
 	@Override
-	public State copy() {
-		throw new RuntimeException("not implemented");
+	public RockSampleObserv copy() {
+		//throw new RuntimeException("not implemented");
+		return new RockSampleObserv(rockFeedback);
 	}
 
 	@Override
-	public Object get(Object variableKey) {
-		
-		throw new RuntimeException("not implemented");
+	public List<String> get(Object variableKey) {
+		//throw new RuntimeException("not implemented");
+		return rockFeedback;
 	}
 
 	@Override
@@ -39,7 +42,18 @@ public class RockSampleObserv implements MutableState{
 
 	@Override
 	public MutableState set(Object variableKey, Object value) {
-		throw new RuntimeException("not implemented");
+		//throw new RuntimeException("not implemented");
+		if(!(value instanceof String)){
+			throw new RuntimeException("Value must be a string");
+		}
+		
+		List<String> feedback = (List<String>)value;
+		if(!rockFeedback.equals() ){
+			throw new RuntimeException("");
+		}
+		this.rockFeedback = rockFeedback;
+		
+		return this;
 	}
 
 	
