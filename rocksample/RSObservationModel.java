@@ -8,6 +8,7 @@ import burlap.mdp.core.state.State;
 import burlap.mdp.singleagent.pomdp.observations.DiscreteObservationFunction;
 import burlap.mdp.singleagent.pomdp.observations.ObservationProbability;
 import burlap.mdp.singleagent.pomdp.observations.ObservationUtilities;
+import rocksample.state.RockSampleAgent;
 import rocksample.state.RockSampleState;
 
 import java.util.ArrayList;
@@ -38,14 +39,65 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	@Override
 	public double probability(State observation, State s_prime, Action action) {
 		
-		//throw new RuntimeException("probability(State, State, Action) not implemented");
-		String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
+		throw new RuntimeException("probability(State, State, Action) not implemented");
+		/*String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
 		
-		if(action.actionName()action.equals(RockSample.ACTION_SCAN)){
-		
+		if(action.actionName().equals(RockSample.ACTION_SCAN)){
+			throw new RuntimeException("if action equals scan");
 		}
 		
+		/*else if(action.actionName().equals(RockSample.ACTION_CLEAR)){
+			
+		}*/
 		
+		//return scanAccuracy;
+	}
+	
+	//computation for distance feedback
+	//RETURN GOOD OR BAD DEPENDING ON DISTANCE
+	public void feedback(State s, RockSampleAgent agent, int mapWidth, int mapHeight){
+		
+		/*1st Option (scan entire map)
+		 * feedback accuracy is determined by how far away the
+		 * rock or object is from the agent
+		 */
+		//TODO
+		//to get the distance, use the Pythagorean theorem
+		int distX_AgentToRock  = Math.abs(agent.getX()/* - x coordinate of a rock*/);
+		int distY_AgentToRock =  Math.abs(agent.getY()/* - y coordinate of a rock*/); 
+		double hypDist =  Math.sqrt(((distX_AgentToRock*distX_AgentToRock) + (distY_AgentToRock*distY_AgentToRock)));
+		
+		double mapDist = Math.sqrt((mapWidth*mapWidth)+(mapHeight*mapHeight));
+		
+		/*
+		 * if the distance from the agent to the rock is within 25% if the 
+		 * map Distance
+		 */
+		if (hypDist < (0.25*mapDist)){
+			double feedbackAccuracy = 20.0;
+		}
+		
+		/*
+		 * if the distance from the agent to the rock is between 25% 
+		 * and 50% of the map Distance
+		 */
+		else if((hypDist > (0.25*mapDist)) && (hypDist <= (0.5*mapDist))){
+			double feedbackAccuracy = 5.0;
+		}
+		
+		else if(hypDist > (0.5*mapDist)){
+			double feedbackAccuracy = 1.0;
+		}
+		
+		//if feedback accuracy within certain range, quality is good or bad
+	
+		//------------------------------------------------------------------------------
+		/*2nd Option (scan radius)
+			 * for scan radius, check if the object's x or y coordinate
+			 * is less than or equal to the agent's x or y plus whatever				 * range----therefore the object is within the particular
+				 * scan radius
+				 */
+				//TODO
 		
 	}
 
@@ -68,12 +120,26 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		for(int i = 1; i < numRocks; i++){
 			feedback.add(RockSample.QUALITY_UNKNOWN);
 		}
-		return new RockSampleObserv(feedback);
+		
+		if(action.actionName().equals(RockSample.ACTION_NORTH) || action.actionName().equals(RockSample.ACTION_SOUTH)
+				|| action.actionName().equals(RockSample.ACTION_EAST) || action.actionName().equals(RockSample.ACTION_WEST)){
+
+			return new RockSampleObserv(feedback);
+		}
+		
+		else if(action.actionName().equals(RockSample.ACTION_SCAN)){
+			return new RockSampleObserv(feedback);
+		}
+		
+		else{
+			throw new RuntimeException("Unknown action type in sample");
+		}
+	
 	}
 
 	@Override
 	public List<ObservationProbability> probabilities(State arg0, Action arg1) {
-		throw new RuntimeException("probabilities(State, Ation) not implemented");
+		throw new RuntimeException("probabilities(State, Action) not implemented");
 	}
 	
 	protected State observationRockQuality(){

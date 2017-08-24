@@ -24,6 +24,7 @@ import burlap.behavior.valuefunction.ConstantValueFunction;
 import burlap.debugtools.RandomFactory;
 */
 import burlap.mdp.auxiliary.DomainGenerator;
+import burlap.mdp.auxiliary.common.GoalConditionTF;
 import burlap.mdp.auxiliary.common.NullTermination;
 /*
 import burlap.mdp.auxiliary.common.GoalConditionTF;
@@ -69,6 +70,7 @@ import burlap.visualizer.Visualizer;
 import burlap.mdp.singleagent.SADomain;
 */
 import burlap.mdp.singleagent.pomdp.PODomain;
+import burlap.mdp.singleagent.pomdp.SimulatedPOEnvironment;
 import burlap.mdp.singleagent.pomdp.observations.ObservationFunction;
 import burlap.statehashing.HashableStateFactory;
 import burlap.statehashing.simple.SimpleHashableStateFactory;
@@ -119,6 +121,8 @@ public class RockSample implements DomainGenerator {
 	public static final String QUALITY_UNKNOWN = "unknown";
 	//public static final String QUALITY_TOXIC =  "toxic";
 	//public static final String QUALITY_NONTOXIC =  "non-toxic";
+	
+	public static final String VAR_FEEDBACK = "feedback";
 	
 	public int numRocks = 0;
 	public int numGoodRocksVisited = 0;
@@ -191,27 +195,13 @@ public class RockSample implements DomainGenerator {
 			.addActionType(new UniversalActionType(ACTION_EAST))
 			.addActionType(new UniversalActionType(ACTION_WEST))
 			.addActionType(new UniversalActionType(ACTION_SCAN))
-			.addActionType(new UniversalActionType(ACTION_CLEAR))
+			//.addActionType(new UniversalActionType(ACTION_CLEAR))
 			//.addActionType(new UniversalActionType(ACTION_PICKUP))
 			;
 		
 		ObservationFunction of = new RSObservationModel(this.scanAccuracy);
-		rsdomain.setObservationFunction(of);
+		rsdomain.setObservationFunction(of); 
 		
-		if (rf == null){
-			
-			rf = new UniformCostRF();
-		}
-		
-		if (tf == null){
-			
-			tf = new NullTermination();
-		} 
-		
-		/*create a model = new MYmodel()
-		 * 
-		 * 
-		 */
 		RockSampleModel model = new RockSampleModel(goodRockCollectReward, badRockReward, scanReward, nothingReward);
 		//want to create a factored model so pass in the sample state model
 		FactoredModel fmodel = new FactoredModel(model, rf, tf);
@@ -256,10 +246,9 @@ public class RockSample implements DomainGenerator {
 		s.addObject(new RockSampleBlock("block3", 3, 0));
 		s.addObject(new RockSampleBlock("block4", 2, 4));
 		s.addObject(new RockSampleBlock("block5", 1, 3));
-		//s.addObject(new KSGridWorldAgent("overallAgent", 1, 0));
 		//s.addObject(new KSGridWorldGoal ("overallGoal", 2, 3, "red"));
-		s.addObject(new RockSampleRock("rock1", 3, 4));
-		s.addObject(new RockSampleDebris("debris1", 2, 4));
+		//s.addObject(new RockSampleRock("rock1", 3, 4));
+		//s.addObject(new RockSampleDebris("debris1", 2, 4));
 		
 		
 		return s;
@@ -294,15 +283,16 @@ public class RockSample implements DomainGenerator {
 		
 		//goalCondition = new KSGridWorldGoal();
 		rf = new RockSampleRF(atGoal, rewardGoal, rewardDefault, rewardNoop, rewardMove);
-		tf = new RockSampleTF();
+		//tf = new RockSampleTF();
+		tf = new GoalConditionTF(atGoal);
 		RockSample gen = new RockSample(rf, tf, 5, 5);
 		
 		domain = gen.generateDomain();
 
 //		goalCondition.setGoals(goals);
-		initialState = (RockSampleState) gen.getInitialState(1, 0);
+		initialState = (RockSampleState) gen.getInitialState(0, 0);
 		hashingFactory = new SimpleHashableStateFactory();
-		env = new SimulatedEnvironment(domain, initialState);
+		Environment poenv = new SimulatedPOEnvironment(domain, initialState);
 //
 //		Visualizer v = CleanupVisualizer.getVisualizer(width, height);
 //		VisualExplorer exp = new VisualExplorer(domain, v, initialState);
@@ -325,7 +315,7 @@ public class RockSample implements DomainGenerator {
 		
 		LearningAgent agent = new QLearning(domain, gamma, hashingFactory, qInit, learningRate, maxEpisodeSize);
 		for(int i = 0; i < nEpisodes; i++){
-			Episode e = agent.runLearningEpisode(env, maxEpisodeSize);
+			Episode e = agent.runLearningEpisode(poenv, maxEpisodeSize);
 			if (i % writeEvery == 0) {
 				e.write(outputPath + "ql_" + i);
 			}
@@ -333,7 +323,7 @@ public class RockSample implements DomainGenerator {
 			System.out.println(i + ": " + e.actionSequence);
 			System.out.println(i + ": " + e.rewardSequence);
 			//System.out.println(i + ": " + e.stateSequence);
-			env.resetEnvironment();
+			poenv.resetEnvironment();
 		}
 		/*
 		LearningAgent agent = new BFS(domain, gamma, hashingFactory, qInit, learningRate, maxEpisodeSize);

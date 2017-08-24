@@ -13,7 +13,6 @@ public class RockSampleTF implements TerminalFunction{
 		
 	}
 	
-	
 	//once task has been completed or agent has gotten to a state
 	//that cannot be returned from, this is terminal
 	@Override 

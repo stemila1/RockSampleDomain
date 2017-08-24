@@ -59,21 +59,22 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 		//action is scan 
 		else if(actionName.equals(RockSample.ACTION_SCAN)){
 			//TODO
-			return tempScan(s); //temporary for testing purposes
+			//return tempScan(s); //temporary for testing purposes
 			
-			//return scanForRocks(s, a, , );
+			return scanForRocks(s);
 		}
 		
-		/*else if(actionName.equals(RockSample.ACTION_SCAN_NOTHING)){
-			return;
-		}*/
+		else if(actionName.equals(RockSample.ACTION_SCAN_NOTHING)){
+			return s;
+		}
 		
+		/*
 		else if (actionName.equals(RockSample.ACTION_CLEAR)){
 			//TODO
 			//throw new RuntimeException("Clear not implemented yet");
 			return clearDebris(s, RockSample.CLASS_DEBRIS);
 		}
-		
+		*/
 		else if(actionName.equals(RockSample.ACTION_DO_NOTHING)){
 			//TODO
 			throw new RuntimeException("Do nothing not implemented yet");
@@ -81,7 +82,6 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 		
 		else {
 			throw new RuntimeException("Unknown action" + actionName);	
-	
 		}
 		
 	}
@@ -145,9 +145,7 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 				
 			}
 			
-		}
-		
-			
+		}	
 		
 		RockSampleAgent nAgent = rstate.touchAgent();
 		if (agentCanMove){
@@ -155,8 +153,6 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 			nAgent.set(RockSample.POS_X, nx);
 			nAgent.set(RockSample.POS_Y, ny);
 		}
-		
-		
 		
 		return s;
 	}
@@ -190,62 +186,13 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 		return actionDir(a.actionName());
 	}
 	
-	//temporary scan function to use for do nothing action
-	public State tempScan(State s){
-		
-		return s;
-		
-	}
-	
 	//need a scan action to check for rocks
 	//when agent is in any state, knows how many rocks
-	public void scanForRocks(State s, RockSampleAgent agent, 
-			int mapWidth, int mapHeight){
+	public State scanForRocks(State s){
 		
-		/*1st Option (scan entire map)
-		 * feedback accuracy is determined by how far away the
-		 * rock or object is from the agent
-		 */
-		//TODO
-		//to get the distance, use the Pythagorean theorem
-		int distX_AgentToRock  = Math.abs(agent.getX()/* - x coordinate of a rock*/);
-		int distY_AgentToRock =  Math.abs(agent.getY()/* - y coordinate of a rock*/); 
-		double hypDist =  Math.sqrt(((distX_AgentToRock*distX_AgentToRock) + (distY_AgentToRock*distY_AgentToRock)));
+		s = (RockSampleState)s;
 		
-		double mapDist = Math.sqrt((mapWidth*mapWidth)+(mapHeight*mapHeight));
-		
-		/*
-		 * if the distance from the agent to the rock is within 25% if the 
-		 * map Distance
-		 */
-		if (hypDist < (0.25*mapDist)){
-			double feedbackAccuracy = 20.0;
-		}
-		
-		/*
-		 * if the distance from the agent to the rock is between 25% 
-		 * and 50% of the map Distance
-		 */
-		else if((hypDist > (0.25*mapDist)) && (hypDist <= (0.5*mapDist))){
-			double feedbackAccuracy = 5.0;
-		}
-		
-		else if(hypDist > (0.5*mapDist)){
-			double feedbackAccuracy = 1.0;
-		}
-		
-		//if feedback accuracy within certain range, quality is good or bad
-		
-		
-		//------------------------------------------------------------------------------
-		/*2nd Option (scan radius)
-		 * for scan radius, check if the object's x or y coordinate
-		 * is less than or equal to the agent's x or y plus whatever
-		 * range----therefore the object is within the particular
-		 * scan radius
-		 */
-		//TODO
-			
+		return s;		
 	}
 	
 	public void collectRocks(State s){
@@ -255,15 +202,18 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 
 	public State clearDebris(State s, String whatIsThis){
 		
+		throw new RuntimeException("clear not necessary yet");
+		/*
 		RockSampleState rs = (RockSampleState)s;
 		RockSampleAgent agent = rs.getAgent();
 		//need a boolean to tell if able to clear???
 		//check if the object encountered is debris and not a rock or other object
-		if(whatIsThis == RockSample.CLASS_DEBRIS /*or instanceof RockSampleDebris*/){
+		if(whatIsThis == RockSample.CLASS_DEBRIS) { //instanceof debris
 			rs.removeObject(whatIsThis);
 		}
 		
 		return rs;
+		*/
 	}
 	
 	/*
