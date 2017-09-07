@@ -10,6 +10,7 @@ import burlap.mdp.singleagent.pomdp.observations.ObservationProbability;
 import burlap.mdp.singleagent.pomdp.observations.ObservationUtilities;
 import rocksample.state.RockSampleAgent;
 import rocksample.state.RockSampleState;
+import rocksample.RockSampleObserv;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		//TODO
 		List</*State*/RockSampleObserv> result = new ArrayList</*State*/RockSampleObserv>();
 		
-		result.add();
+		result.add(); //need to add observations
 		
 		return result;
 		
@@ -38,8 +39,8 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	@Override
 	public double probability(State observation, State s_prime, Action action) {
 		
-		throw new RuntimeException("probability(State, State, Action) not implemented");
-		/*String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
+		//throw new RuntimeException("probability(State, State, Action) not implemented");
+		String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
 		
 		if(action.actionName().equals(RockSample.ACTION_SCAN)){
 			throw new RuntimeException("if action equals scan");
@@ -156,5 +157,15 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		//return new RockSampleObserv(null));
 	}
 
+	//TODO
+	//need to return the observation of scanning a good rock
+	protected State observationGood(){
+		return RockSampleObserv(RockSample.QUALITY_GOOD);
+	}
 	
+	//TODO
+	//need to return the observation of scanning a bad rock
+	protected State observationBad(){
+		return RockSampleObserv(RockSample.QUALITY_BAD);
+	}
 }

@@ -14,7 +14,11 @@ public class RockSampleObserv implements MutableState{
 	//public String scan;
 	private List<String> rockFeedback =  new ArrayList<String>();
 	
-	public RockSampleObserv(){}
+	//return the string type quality of the rock
+	public RockSampleObserv(String quality){
+		
+	}
+	
 	
 	//list to store the returned feedback
 	public RockSampleObserv(List<String> rockFeedback){
@@ -72,7 +76,5 @@ public class RockSampleObserv implements MutableState{
 	public void setRockFeedback(List<String> rockFeedback) {
 		this.rockFeedback = rockFeedback;
 	}
-
-	
 	
 }
