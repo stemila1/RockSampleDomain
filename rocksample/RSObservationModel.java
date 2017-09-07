@@ -26,14 +26,13 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	@Override
 	public List<State> allObservations() {
 		//TODO
-		List<State/*RockSampleObserv*/> result = new ArrayList<State/*RockSampleObserv*/>();
+		List</*State*/RockSampleObserv> result = new ArrayList</*State*/RockSampleObserv>();
 		
-		//result.add(State e);
+		result.add();
+		
+		return result;
 		
 		throw new RuntimeException("all observations not implemented");
-		/*if(includeDoNothing){
-			result.add(this.observationNothing());
-		}*/
 	}
 	
 	@Override
@@ -55,6 +54,7 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	
 	//computation for distance feedback
 	//RETURN GOOD OR BAD DEPENDING ON DISTANCE
+	//need to return some form of noise
 	public void feedback(State s, RockSampleAgent agent, int mapWidth, int mapHeight){
 		
 		/*1st Option (scan entire map)
@@ -73,8 +73,10 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		 * if the distance from the agent to the rock is within 25% if the 
 		 * map Distance
 		 */
+		double feedback_Accuracy;
+		
 		if (hypDist < (0.25*mapDist)){
-			double feedbackAccuracy = 20.0;
+			feedback_Accuracy = 20.0;
 		}
 		
 		/*
@@ -82,15 +84,22 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		 * and 50% of the map Distance
 		 */
 		else if((hypDist > (0.25*mapDist)) && (hypDist <= (0.5*mapDist))){
-			double feedbackAccuracy = 5.0;
+			feedback_Accuracy = 10.0;
+			
+			
 		}
 		
 		else if(hypDist > (0.5*mapDist)){
-			double feedbackAccuracy = 1.0;
+			feedback_Accuracy = 1.0;
 		}
 		
-		//if feedback accuracy within certain range, quality is good or bad
-	
+		//if feedback accuracy within certain range, quality is good or bad	
+		else{
+			throw new RuntimeException("Feedback accuracy is not within proper accuracy range");
+		}
+		
+		
+		
 		//------------------------------------------------------------------------------
 		/*2nd Option (scan radius)
 			 * for scan radius, check if the object's x or y coordinate
@@ -147,7 +156,5 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		//return new RockSampleObserv(null));
 	}
 
-	
-	
 	
 }
