@@ -157,7 +157,10 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		//return new RockSampleObserv(null));
 	}
 
-	//TODO
+	
+	
+	//TODO - will need to cast to a State but return a string?
+	
 	//need to return the observation of scanning a good rock
 	protected State observationGood(){
 		return RockSampleObserv(RockSample.QUALITY_GOOD);
