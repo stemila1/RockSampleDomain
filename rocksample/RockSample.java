@@ -124,7 +124,7 @@ public class RockSample implements DomainGenerator {
 	
 	public static final String VAR_FEEDBACK = "feedback";
 	
-	public int numRocks = 0;
+	public int numRocks = 6;
 	public int numGoodRocksVisited = 0;
 	public int numBadRocksVisited = 0;
 	public int numGoodRocksScanned = 0;

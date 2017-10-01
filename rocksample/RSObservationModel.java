@@ -74,8 +74,11 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		 * if the distance from the agent to the rock is within 25% if the 
 		 * map Distance
 		 */
+		double d0 = hypDist;
 		double feedback_Accuracy;
-		
+		double exp = hypDist/d0;
+		double noise = Math.pow(2, exp);
+				
 		if (hypDist < (0.25*mapDist)){
 			feedback_Accuracy = 20.0;
 		}
@@ -100,7 +103,7 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		}
 		
 		
-		
+		s
 		//------------------------------------------------------------------------------
 		/*2nd Option (scan radius)
 			 * for scan radius, check if the object's x or y coordinate
