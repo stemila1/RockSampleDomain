@@ -11,6 +11,7 @@ import static rocksample.RockSample.*;
 
 public class RockSampleObserv implements MutableState{
 
+	
 	//public String scan;
 	private List<String> rockFeedback =  new ArrayList<String>();
 	

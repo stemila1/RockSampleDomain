@@ -29,9 +29,9 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		//TODO
 		List</*State*/RockSampleObserv> result = new ArrayList</*State*/RockSampleObserv>();
 		
-		result.add(); //need to add observations
+		//result.add(); //need to add observations
 		
-		return result;
+		//return result;
 		
 		throw new RuntimeException("all observations not implemented");
 	}
@@ -39,8 +39,9 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	@Override
 	public double probability(State observation, State s_prime, Action action) {
 		
-		//throw new RuntimeException("probability(State, State, Action) not implemented");
-		String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
+		
+		throw new RuntimeException("probability(State, State, Action) not implemented");
+		/*String obsVal = (String)observation.get(RockSample.ACTION_SCAN);
 		
 		if(action.actionName().equals(RockSample.ACTION_SCAN)){
 			throw new RuntimeException("if action equals scan");
@@ -77,10 +78,11 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		double d0 = hypDist;
 		double feedback_Accuracy;
 		double exp = hypDist/d0;
-		double noise = Math.pow(2, exp);
+		double noise = Math.pow(2, -exp);
 				
 		if (hypDist < (0.25*mapDist)){
 			feedback_Accuracy = 20.0;
+			
 		}
 		
 		/*
@@ -103,7 +105,6 @@ public class RSObservationModel implements DiscreteObservationFunction{
 		}
 		
 		
-		s
 		//------------------------------------------------------------------------------
 		/*2nd Option (scan radius)
 			 * for scan radius, check if the object's x or y coordinate
@@ -164,6 +165,7 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	
 	//TODO - will need to cast to a State but return a string?
 	
+	/*
 	//need to return the observation of scanning a good rock
 	protected State observationGood(){
 		return RockSampleObserv(RockSample.QUALITY_GOOD);
@@ -173,5 +175,5 @@ public class RSObservationModel implements DiscreteObservationFunction{
 	//need to return the observation of scanning a bad rock
 	protected State observationBad(){
 		return RockSampleObserv(RockSample.QUALITY_BAD);
-	}
+	}*/
 }

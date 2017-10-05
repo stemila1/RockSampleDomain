@@ -38,12 +38,12 @@ public class RockSampleState implements MutableOOState {
 	
 	
 	public RockSampleState(RockSampleAgent agent, 
-			List<RockSampleBlock> blocks, RockSampleRock rock, RockSampleDebris debris, int width, int height){
+			List<RockSampleBlock> blocks, RockSampleRock rock, /*RockSampleDebris debris,*/ int width, int height){
 		
 		this.agent =  agent;
 		this.blocks = blocks;
 		this.rock = rock;
-		this.debris = debris;
+		//this.debris = debris;
 		
 		this.width = width;
 		this.height = height;
@@ -175,7 +175,7 @@ public class RockSampleState implements MutableOOState {
 		List<RockSampleBlock> newblocks = new ArrayList<>();
 		for(RockSampleBlock b : blocks)
 			newblocks.add(b.copy());
-		return new RockSampleState(agent.copy(), newblocks, rock, debris, width, height);
+		return new RockSampleState(agent.copy(), newblocks, rock, /*debris,*/ width, height);
 	}
 	
 	

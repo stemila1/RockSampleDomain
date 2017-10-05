@@ -234,22 +234,23 @@ public class RockSample implements DomainGenerator {
 		//set up an initial state
 		RockSampleAgent agent = new RockSampleAgent(CLASS_AGENT, x, y);
         List<RockSampleBlock> blocks = new ArrayList<>(Arrays.asList());
-		RockSampleRock rock = new RockSampleRock(CLASS_ROCK, x, y);
-		RockSampleDebris debris = new RockSampleDebris(CLASS_DEBRIS, x, y);
+		RockSampleRock rock = new RockSampleRock(CLASS_ROCK, x, y+1);
+		//RockSampleDebris debris = new RockSampleDebris(CLASS_DEBRIS, x, y);
 		
-		RockSampleState s = new RockSampleState(agent, blocks, rock, debris, width, height);
+		RockSampleState s = new RockSampleState(agent, blocks, rock, /*debris,*/ width, height);
 		
 		//need to add in the objects as necessary
 		s.addObject(new RockSampleBlock("block0", 0, 2));
-		s.addObject(new RockSampleBlock("block1", 1, 2));
-		s.addObject(new RockSampleBlock("block2", 2, 2));
-		s.addObject(new RockSampleBlock("block3", 3, 0));
-		s.addObject(new RockSampleBlock("block4", 2, 4));
-		s.addObject(new RockSampleBlock("block5", 1, 3));
+		s.addObject(new RockSampleBlock("block1", 1,1));
+		s.addObject(new RockSampleBlock("block2", 1, 2));
+		s.addObject(new RockSampleBlock("block3", 2, 2));
+		s.addObject(new RockSampleBlock("block4", 3, 0));
+		s.addObject(new RockSampleBlock("block5", 2, 4));
+		s.addObject(new RockSampleBlock("block6", 1, 3));
 		//s.addObject(new KSGridWorldGoal ("overallGoal", 2, 3, "red"));
-		//s.addObject(new RockSampleRock("rock1", 3, 4));
+		s.addObject(new RockSampleRock("rock1", 3, 4));
+		s.addObject(new RockSampleRock("rock2", 0, 3));
 		//s.addObject(new RockSampleDebris("debris1", 2, 4));
-		
 		
 		return s;
 	}

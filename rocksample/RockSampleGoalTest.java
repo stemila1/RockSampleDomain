@@ -21,11 +21,9 @@ public class RockSampleGoalTest implements StateConditionTest{
 		int x = agent.getX();
 		int y = agent.getY();
 		
-		if(x == 2 && y == 0){
+		if(x == 4 && y == 0){
 			return true;
 		}
-		
-		//else if() //one rock is collected
 		
 		return false;
 		//need to check if the agent has collected at least one bad rock -- fail

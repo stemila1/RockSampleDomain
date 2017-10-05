@@ -190,14 +190,19 @@ public class RockSampleModel implements SampleStateModel{ //implements FullModel
 	//when agent is in any state, knows how many rocks
 	public State scanForRocks(State s){
 		
+		//simply returns the current state
 		s = (RockSampleState)s;
 		
 		return s;		
 	}
 	
 	public void collectRocks(State s){
-		//TODO
+		/*TODO once a scan is completed, if a rock 
+		 * is in close proximity to the agent then the agent
+		 * will go to it and collect it (depending on the feedback
+		 */
 		RockSampleState rs = (RockSampleState)s;
+		
 	}
 
 	public State clearDebris(State s, String whatIsThis){
