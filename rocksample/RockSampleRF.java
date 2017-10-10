@@ -1,6 +1,7 @@
 package rocksample;
 
 
+
 import burlap.behavior.policy.Policy;
 import burlap.behavior.policy.PolicyUtils;
 import burlap.behavior.singleagent.Episode;
@@ -44,59 +45,119 @@ import burlap.shell.visual.VisualExplorer;
 import burlap.statehashing.HashableStateFactory;
 import burlap.statehashing.simple.SimpleHashableStateFactory;
 import burlap.visualizer.Visualizer;
-
+import burlap.mdp.core.TerminalFunction;
+import rocksample.state.RockSampleState;
 
 //what reward function class to extend from?
 public class RockSampleRF extends GoalBasedRF{
+	/**
+	 * the reward for taking an action
+	 */
+	private double stepReward;
 
-	private double goalReward;
-	private double moveReward;
-	private double no_opReward;
-	private double scanReward;
-	private double clearReward;
-	
-	public RockSampleRF(StateConditionTest goalReached, double rewardGoal, double rewardDefault, double rewardNoop, double rewardMove/*, 
-			double scanR, double clearR*/){
-		
-		super(goalReached, rewardGoal, rewardDefault);
-		
-		this.goalReward = rewardGoal;
-		this.no_opReward = rewardNoop;
-		this.moveReward = rewardMove;
-		//this.scanReward = scanR;
-		//this.clearReward = clearR;
-		
+	/**
+	 * the reward for sampling a good rock
+	 */
+	private double goodRockReward;
+
+	/**
+	 * the reward for sampling a bad rock
+	 */
+	private double badRockReward;
+
+	/**
+	 * the reward for moving into exit area
+	 */
+	private double exitReward;
+
+	/**
+	 * the reward for checking a rock
+	 */
+	private double checkReward;
+
+	/**
+	 * reward for taking no action
+	 */
+	private double noopReward;
+
+	/**
+	 * the rocksample terminal function
+	 */
+	private TerminalFunction tf;
+
+	/**
+	 * use the default rewards
+	 */
+	public RockSampleRF()
+	{
+		stepReward = -1;
+		goodRockReward = 10;
+		badRockReward = -10;
+		exitReward = 10;
+		checkReward = 0;
+		tf = new RockSampleTF();
 	}
-	
-	public double getScanReward(){
-		return scanReward;
+
+	/**
+	 * use custom rewards
+	 * @param stepR the reward for an action
+	 * @param goodrockR the reward for sampling a good rock
+	 * @param badrockR the reward for sampling a bad rock
+	 * @param exitR the reward for moving into exit area
+	 * @param checkR the reward for checking a rock
+	 */
+	public RockSampleRF(double stepR, double goodRockR, double badRockR, double exitR, double checkR)
+	{
+		stepReward = stepR;
+		goodRockReward = goodRockR;
+		badRockReward = badRockR;
+		exitReward = exitR;
+		checkReward = checkR;
+		tf = new RockSampleTF();
 	}
-	
-	public void setScanReward(double scan){
-		this.scanReward = scan;
-	}
-	
-	public double getClearReward(){
-		return clearReward;
-	}
-	
-	public void setClearReward(double clear){
-		this.clearReward = clear;
-	}
-	
-	
+
 	@Override
-	public double reward(State s, Action a, State s_prime){
-		double r = super.reward(s, a, s_prime);
-		
-		//moves to a valid next state
-		if (s.equals(s_prime)){
-			r += no_opReward;
+	public double reward(State s, Action a, State sprime){
+		RockSample state = (RockSampleState) s;
+
+		double superR = super.reward(s,a,sprime);
+		double r = superR;
+
+		// when state is terminal
+		// TODO: redefine terminal state -- when agent moves to the exit area
+		if (tf.isTerminal(sprime))
+			return exitReward + r;
+
+		// movement reward
+		if (a.actionName().equals(RockSample.ACTION_NORTH)
+				|| a.actionName().equals(RockSample.ACTION_EAST)
+				|| a.actionName().equals(RockSample.ACTION_WEST)
+				|| a.actionName().equals(RockSample.ACTION_SOUTH))
+		{
+			r+= stepReward;
 		}
-		//s is not in the next state yet, must move
-		else{
-			r += moveReward;
+
+		// check action reward
+		if (a.actionName().equals(RockSample.ACTION_SCAN))
+		{
+			r += checkReward;
 		}
+
+		// sample action reward
+		if (a.actionName().equals(RockSample.ACTION_SAMPLE_ROCK1))
+		{
+			//if rock is bad
+			r += badRockReward;
+
+			// if rock is good
+			r += goodRockReward;
+		}
+
+		if (s.equals(sprime))
+		{
+			r += noopReward;
+		}
+
 		return r;
 	}
 	
